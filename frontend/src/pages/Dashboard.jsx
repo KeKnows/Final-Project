@@ -1,29 +1,22 @@
-import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from backend.database import get_db
+from backend.models.workout import Workout
+from datetime import datetime, timedelta
 
-export default function Dashboard() {
-  const API_URL = import.meta.env.VITE_API_URL;
-  const [workouts, setWorkouts] = useState([]);
-  const user_id = 1; // replace with real user
+router = APIRouter(prefix="/summary", tags=["AI Summary"])
 
-  const fetchWorkouts = async () => {
-    const res = await fetch(`${API_URL}/workouts/${user_id}`);
-    const data = await res.json();
-    setWorkouts(data);
-  };
+@router.get("/{user_id}")
+def weekly_summary(user_id: int, db: Session = Depends(get_db)):
+    today = datetime.today().date()
+    week_ago = today - timedelta(days=7)
+    workouts = db.query(Workout).filter(Workout.user_id == user_id, Workout.date >= week_ago).all()
+    
+    if not workouts:
+        return {"summary": "No workouts logged this week."}
 
-  useEffect(() => { fetchWorkouts(); }, []);
+    summary_text = "This week you logged:\n"
+    for w in workouts:
+        summary_text += f"- {w.date}: {w.type} - {w.value}\n"
 
-  return (
-    <div style={{ maxWidth: 700, margin: "20px auto" }}>
-      <h2>Dashboard</h2>
-      <LineChart width={700} height={300} data={workouts}>
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-      </LineChart>
-    </div>
-  );
-}
+    return {"summary": summary_text}
