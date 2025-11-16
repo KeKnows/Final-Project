@@ -32,3 +32,7 @@ class User(Base):
     event = Column(String, nullable=True)
     experience_level = Column(String, nullable=True)
     goals = Column(String, nullable=True)
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
