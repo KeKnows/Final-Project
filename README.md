@@ -45,3 +45,78 @@ Advanced AI model for predictive analytics
 Integration with wearable devices (Garmin, Strava, etc.)
 
 Social leaderboard and competition tracking
+
+(Updates)
+
+This PR updates the documentation for the MVP:
+
+- Added setup instructions for backend and frontend
+- Documented all MVP features: authentication, workout tracking, dashboard, AI summary
+- Added AI tool usage section (ChatGPT, GitHub Copilot)
+- Listed branches and commits used for feature development
+- Updated Confluence page with screenshots and descriptions
+
+- # StierSpeed MVP Documentation
+
+## Setup Instructions
+
+### Backend
+1. Navigate to backend folder:
+cd backend
+
+ 
+2. Install dependencies:
+pip install -r requirements.txt
+
+
+3. Run backend server:
+uvicorn main:app --reload
+
+
+### Frontend
+1. Navigate to frontend folder:
+cd frontend
+
+ 
+2. Install dependencies:
+npm install
+
+3. Run frontend:
+npm run dev
+
+javascript
+Copy code
+4. Set API URL in `.env`:
+VITE_API_URL=http://localhost:8000
+
+yaml
+
+---
+
+## Features
+
+- **User Authentication:** Signup/Login with JWT tokens
+- **Workout Tracking:** Log sprints and strength workouts (add/edit/delete)
+- **Dashboard:** Line charts showing weekly progress
+- **AI Text Summaries:** Weekly summaries of workouts for performance insights
+
+---
+
+## AI Tool Usage
+
+- **ChatGPT / OpenAI API:** Suggested code snippets for backend routes and frontend components
+- **GitHub Copilot:** Assisted in writing React components and FastAPI CRUD routes
+
+---
+
+## Branches & Commits
+
+| Branch                  | Purpose                                      | Example Commits                                 |
+|--------------------------|----------------------------------------------|------------------------------------------------|
+| feature/auth-backend     | Backend signup/login                         | feat(auth): add User model                     |
+| feature/signup-ui        | Frontend Signup page                          | feat(frontend): add Signup page               |
+| feature/login-ui         | Frontend Login page                           | feat(frontend): add Login page                |
+| feature/workout-tracking | Backend & frontend workout CRUD               | feat(workout): add Workout model and routes   |
+| feature/dashboard        | Dashboard with charts                          | feat(frontend): add Dashboard page            |
+| feature/ai-summary       | AI weekly summary                             | feat(ai): add summary route                   |
+| feature/docs             | Documentation updates                          | docs: update README and Confluence            |
