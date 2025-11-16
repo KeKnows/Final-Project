@@ -20,3 +20,18 @@ def weekly_summary(user_id: int, db: Session = Depends(get_db)):
         summary_text += f"- {w.date}: {w.type} - {w.value}\n"
 
     return {"summary": summary_text}
+
+const [summary, setSummary] = useState("");
+
+const fetchSummary = async () => {
+  const res = await fetch(`${API_URL}/summary/${user_id}`);
+  const data = await res.json();
+  setSummary(data.summary);
+};
+
+useEffect(() => { fetchSummary(); fetchWorkouts(); }, []);
+
+<div>
+  <h3>AI Weekly Summary</h3>
+  <pre>{summary}</pre>
+</div>
